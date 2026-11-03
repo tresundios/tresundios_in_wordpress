@@ -33,13 +33,19 @@ $tresundios_features  = array(
 	array( __( 'Self-hosted or managed', 'tresundios' ), __( 'Run it on your own server, or let Tresundios host and maintain it in an India-region data centre.', 'tresundios' ) ),
 	array( __( 'Open-source core', 'tresundios' ), __( 'The core is source-available under BSL 1.1, so you can see exactly what runs your clinic.', 'tresundios' ) ),
 );
-$tresundios_paid      = array(
-	array( __( 'Installation and setup', 'tresundios' ), '[[PRICE: setup]]' ),
-	array( __( 'Managed hosting (India region)', 'tresundios' ), '[[PRICE: hosting]]' ),
-	array( __( 'Data migration', 'tresundios' ), '[[PRICE: migration]]' ),
-	array( __( 'Training', 'tresundios' ), '[[PRICE: training]]' ),
-	array( __( 'Support plans', 'tresundios' ), '[[PRICE: support]]' ),
-	array( __( 'Customisation', 'tresundios' ), '[[PRICE: customisation]]' ),
+// Prices as published on https://www.dentalpin.in/pricing.html (per clinic location, excl. 18% GST).
+// Tresundios services have no published price yet: they are quoted after a call.
+$tresundios_quote = __( 'Quote after a free call', 'tresundios' );
+$tresundios_paid  = array(
+	array( __( 'Additional clinic branch', 'tresundios' ), __( 'DentalPin add-on', 'tresundios' ), __( '₹999 a month', 'tresundios' ), true ),
+	array( __( 'WhatsApp reminders add-on', 'tresundios' ), __( 'DentalPin add-on', 'tresundios' ), __( '₹499 a month + Meta message charges at cost', 'tresundios' ), true ),
+	array( __( 'AI assistant', 'tresundios' ), __( 'DentalPin add-on (or included in Pro)', 'tresundios' ), __( '₹699 add-on', 'tresundios' ), true ),
+	array( __( 'Installation and setup', 'tresundios' ), __( 'Tresundios', 'tresundios' ), $tresundios_quote, false ),
+	array( __( 'Managed hosting (India region)', 'tresundios' ), __( 'Tresundios', 'tresundios' ), $tresundios_quote, false ),
+	array( __( 'Data migration', 'tresundios' ), __( 'Tresundios', 'tresundios' ), $tresundios_quote, false ),
+	array( __( 'Training', 'tresundios' ), __( 'Tresundios', 'tresundios' ), $tresundios_quote, false ),
+	array( __( 'Support plans', 'tresundios' ), __( 'Tresundios', 'tresundios' ), $tresundios_quote, false ),
+	array( __( 'Customisation', 'tresundios' ), __( 'Tresundios', 'tresundios' ), $tresundios_quote, false ),
 );
 ?>
 <!-- wp:group {"tagName":"section","className":"page-head tr-sec dp-hero","layout":{"type":"default"}} -->
@@ -131,13 +137,17 @@ $tresundios_paid      = array(
 <!-- /wp:heading -->
 
 <!-- wp:paragraph -->
-<p><?php esc_html_e( 'The core software costs nothing. You pay Tresundios only for the services you choose. All prices are in INR and exclude GST.', 'tresundios' ); ?></p>
+<p><?php esc_html_e( 'The core software costs nothing. Add-ons are priced per clinic location and billed monthly; Tresundios services are quoted after a free call. All prices are in INR and exclude 18% GST.', 'tresundios' ); ?></p>
 <!-- /wp:paragraph -->
 
 <!-- wp:table {"hasFixedLayout":true,"className":"dp-table"} -->
-<figure class="wp-block-table dp-table"><table class="has-fixed-layout"><thead><tr><th><?php esc_html_e( 'What you get', 'tresundios' ); ?></th><th><?php esc_html_e( 'From', 'tresundios' ); ?></th><th><?php esc_html_e( 'Price (INR)', 'tresundios' ); ?></th></tr></thead><tbody><tr><td><?php esc_html_e( 'DentalPin India core software', 'tresundios' ); ?></td><td><?php esc_html_e( 'Free (open source)', 'tresundios' ); ?></td><td><?php esc_html_e( '₹0 per chair or dentist', 'tresundios' ); ?></td></tr>
-<?php foreach ( $tresundios_paid as $tresundios_item ) : ?><tr><td><?php echo esc_html( $tresundios_item[0] ); ?></td><td><?php esc_html_e( 'Tresundios', 'tresundios' ); ?></td><td><?php echo esc_html( $tresundios_item[1] ); ?> <?php echo $tresundios_tax; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></td></tr><?php endforeach; ?></tbody></table></figure>
-<!-- /wp:table --></div>
+<figure class="wp-block-table dp-table"><table class="has-fixed-layout"><thead><tr><th><?php esc_html_e( 'What you get', 'tresundios' ); ?></th><th><?php esc_html_e( 'Provided by', 'tresundios' ); ?></th><th><?php esc_html_e( 'Price (INR)', 'tresundios' ); ?></th></tr></thead><tbody><tr><td><?php esc_html_e( 'DentalPin India core software', 'tresundios' ); ?></td><td><?php esc_html_e( 'Free (open source)', 'tresundios' ); ?></td><td><?php esc_html_e( '₹0 per chair or dentist', 'tresundios' ); ?></td></tr>
+<?php foreach ( $tresundios_paid as $tresundios_item ) : ?><tr><td><?php echo esc_html( $tresundios_item[0] ); ?></td><td><?php echo esc_html( $tresundios_item[1] ); ?></td><td><?php echo esc_html( $tresundios_item[2] ); ?><?php echo $tresundios_item[3] ? ' ' . $tresundios_tax : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- escaped above. ?></td></tr><?php endforeach; ?></tbody></table></figure>
+<!-- /wp:table -->
+
+<!-- wp:paragraph {"className":"dp-table-note"} -->
+<p class="dp-table-note"><?php esc_html_e( 'Plans and add-ons can be switched on or off any month. See the full', 'tresundios' ); ?> <a href="<?php echo esc_url( $tresundios_dp['pricing'] ); ?>"><?php esc_html_e( 'DentalPin India pricing', 'tresundios' ); ?></a>.</p>
+<!-- /wp:paragraph --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
 
