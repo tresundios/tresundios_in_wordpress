@@ -25,6 +25,7 @@ require TRESUNDIOS_CORE_DIR . '/includes/seo/hreflang.php';
 require TRESUNDIOS_CORE_DIR . '/includes/seo/schema.php';
 require TRESUNDIOS_CORE_DIR . '/includes/seo/robots-llms.php';
 require TRESUNDIOS_CORE_DIR . '/includes/seo/redirects.php';
+require TRESUNDIOS_CORE_DIR . '/includes/migrations.php';
 
 if ( is_admin() ) {
 	require TRESUNDIOS_CORE_DIR . '/includes/admin/settings-page.php';

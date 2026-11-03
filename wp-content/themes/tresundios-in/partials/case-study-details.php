@@ -48,11 +48,22 @@ if ( ! $data ) {
 			?>
 			<div class="meta"><span class="cat"><?php echo esc_html( $data['industry'] ); ?></span></div>
 			<h1><?php echo esc_html( $data['title'] ); ?></h1>
-			<div class="row g-2 mt-2">
-				<div class="col-6 col-sm-4"><div class="fact"><small><?php esc_html_e( 'Client', 'tresundios' ); ?></small><b><?php echo esc_html( $data['client'] ); ?></b></div></div>
-				<div class="col-6 col-sm-4"><div class="fact"><small><?php esc_html_e( 'Duration', 'tresundios' ); ?></small><b><?php echo esc_html( $data['duration'] ); ?></b></div></div>
-				<div class="col-12 col-sm-4"><div class="fact"><small><?php esc_html_e( 'Market', 'tresundios' ); ?></small><b><?php echo esc_html( $data['location'] ); ?></b></div></div>
-			</div>
+			<?php
+			$tresundios_facts = array_filter(
+				array(
+					__( 'Client', 'tresundios' )   => $data['client'],
+					__( 'Duration', 'tresundios' ) => $data['duration'],
+					__( 'Market', 'tresundios' )   => $data['location'],
+				)
+			);
+			if ( $tresundios_facts ) :
+				?>
+				<dl class="facts">
+					<?php foreach ( $tresundios_facts as $tresundios_label => $tresundios_value ) : ?>
+						<div class="fact"><dt><?php echo esc_html( $tresundios_label ); ?></dt><dd><?php echo esc_html( $tresundios_value ); ?></dd></div>
+					<?php endforeach; ?>
+				</dl>
+			<?php endif; ?>
 			<?php if ( $data['tech'] ) : ?>
 				<ul class="stack list-unstyled" aria-label="<?php esc_attr_e( 'Technology', 'tresundios' ); ?>">
 				<?php
