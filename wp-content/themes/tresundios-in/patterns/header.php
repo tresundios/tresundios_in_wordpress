@@ -26,6 +26,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:group {"anchor":"tr-menu","className":"tr-menu","layout":{"type":"default"}} -->
 <div id="tr-menu" class="wp-block-group tr-menu"><!-- wp:navigation {"overlayMenu":"never","className":"tr-nav","ariaLabel":"Main","layout":{"type":"flex","flexWrap":"wrap"}} -->
 <!-- wp:navigation-link {"label":"Services","url":"<?php echo esc_url( home_url( '/services/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"Products","url":"<?php echo esc_url( home_url( '/products/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Pricing","url":"<?php echo esc_url( home_url( '/pricing/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Work","url":"<?php echo esc_url( home_url( '/work/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Resources","url":"<?php echo esc_url( home_url( '/resources/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->

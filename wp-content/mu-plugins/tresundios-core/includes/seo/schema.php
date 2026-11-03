@@ -123,6 +123,15 @@ function tresundios_schema_org() {
 			$org['sameAs'][] = $url;
 		}
 	}
+	// DentalPin India: Tresundios is the exclusive India licensee, so the brand belongs on the India site only.
+	if ( tresundios_is_india() && function_exists( 'tresundios_dentalpin' ) ) {
+		$dp           = tresundios_dentalpin();
+		$org['brand'] = array(
+			'@type' => 'Brand',
+			'name'  => $dp['name'],
+			'url'   => untrailingslashit( $dp['url'] ),
+		);
+	}
 	return $org;
 }
 
@@ -329,6 +338,61 @@ function tresundios_schema_entities() {
 	if ( $faq ) {
 		$out['tr_faq'] = $faq;
 	}
+
+	if ( function_exists( 'tresundios_is_dentalpin_page' ) && tresundios_is_dentalpin_page() ) {
+		$out = array_merge( $out, tresundios_schema_dentalpin( $url ) );
+	}
+	return $out;
+}
+
+/**
+ * SoftwareApplication + FAQPage for /products/dentalpin/. The FAQ comes from tresundios_dentalpin_faq(),
+ * the same array the page renders, so the visible FAQ and the schema cannot drift apart.
+ *
+ * @param string $url Page URL.
+ * @return array<string, array<string, mixed>>
+ */
+function tresundios_schema_dentalpin( $url ) {
+	$dp  = tresundios_dentalpin();
+	$out = array(
+		'tr_software' => array(
+			'@type'               => 'SoftwareApplication',
+			'@id'                 => $url . '#software',
+			'name'                => $dp['name'],
+			'applicationCategory' => 'BusinessApplication',
+			'operatingSystem'     => 'Web',
+			'url'                 => untrailingslashit( $dp['url'] ),
+			'description'         => 'Dental practice management software for Indian clinics, with an AI assistant, GST billing, WhatsApp appointment reminders and an interface in 7 Indian languages.',
+			'offers'              => array(
+				'@type'         => 'Offer',
+				'name'          => 'DentalPin India core (open source)',
+				'price'         => '0',
+				'priceCurrency' => 'INR',
+				'url'           => $dp['pricing'],
+			),
+			'publisher'           => array( '@id' => tresundios_org_id() ),
+			'mainEntityOfPage'    => array( '@id' => $url . '#webpage' ),
+		),
+	);
+	$questions = array();
+	foreach ( tresundios_dentalpin_faq() as $qa ) {
+		$questions[] = array(
+			'@type'          => 'Question',
+			'name'           => $qa['question'],
+			'acceptedAnswer' => array(
+				'@type' => 'Answer',
+				'text'  => $qa['answer'],
+			),
+		);
+	}
+	// FAQPage once per page: the DentalPin FAQ replaces any faq_items-based one.
+	$out['tr_faq'] = array(
+		'@type'      => 'FAQPage',
+		'@id'        => $url . '#faq',
+		'url'        => $url,
+		'mainEntity' => $questions,
+		'inLanguage' => tresundios_get( 'hreflang' ),
+	);
 	return $out;
 }
 

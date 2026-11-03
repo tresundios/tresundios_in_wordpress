@@ -17,7 +17,7 @@ add_action(
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 		remove_theme_support( 'core-block-patterns' );
-		add_editor_style( array( 'assets/css/base.css', 'assets/css/site.css' ) );
+		add_editor_style( array( 'assets/css/base.css', 'assets/css/site.css', 'assets/css/products.css' ) );
 		add_post_type_support( 'page', 'excerpt' );
 	}
 );
@@ -58,6 +58,9 @@ add_action(
 			wp_enqueue_style( 'tresundios-site', get_theme_file_uri( 'assets/css/site.css' ), array( 'tresundios-base' ), $v );
 		}
 
+		// Products styles: small, separate file so the prebuilt site.min.css does not need a rebuild.
+		wp_enqueue_style( 'tresundios-products', get_theme_file_uri( 'assets/css/products.css' ), array( 'tresundios-site' ), $v . '.' . filemtime( get_theme_file_path( 'assets/css/products.css' ) ) );
+
 		$defer = array(
 			'strategy'  => 'defer',
 			'in_footer' => true,
@@ -96,4 +99,26 @@ add_action(
 		}
 		echo '<meta name="theme-color" content="#c74634">' . "\n";
 	}
+);
+
+/**
+ * Homepage: show the DentalPin India teaser right after the services section, for homepages built
+ * before the teaser existed. Skipped when the page content already contains the teaser pattern.
+ */
+add_filter(
+	'render_block_core/group',
+	static function ( $html, $block ) {
+		static $done = false;
+		if ( $done || ! is_front_page() || 'services' !== ( $block['attrs']['anchor'] ?? '' ) ) {
+			return $html;
+		}
+		$done = true;
+		$page = get_post( (int) get_option( 'page_on_front' ) );
+		if ( $page && false !== strpos( $page->post_content, 'tresundios/home-product-teaser' ) ) {
+			return $html;
+		}
+		return $html . do_blocks( '<!-- wp:pattern {"slug":"tresundios/home-product-teaser"} /-->' );
+	},
+	10,
+	2
 );

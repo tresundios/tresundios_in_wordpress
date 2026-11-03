@@ -362,5 +362,16 @@
 			"area": "uncategorized"
 		}
 	],
-	"customTemplates": []
+	"customTemplates": [
+		{
+			"name": "page-products",
+			"title": "Products overview",
+			"postTypes": [ "page" ]
+		},
+		{
+			"name": "page-dentalpin",
+			"title": "Product: DentalPin India",
+			"postTypes": [ "page" ]
+		}
+	]
 }

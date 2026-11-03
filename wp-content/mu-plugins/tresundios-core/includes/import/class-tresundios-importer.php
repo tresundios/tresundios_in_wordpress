@@ -945,6 +945,10 @@ class Tresundios_Importer {
 
 		// Home: the original one-page layout, now a summary that links to each section page.
 		$home = array( 'hero', 'marquee', 'services', 'pricing', 'work', 'process', 'about', 'testimonial', 'trust', 'contact' );
+		if ( $this->india ) {
+			// DentalPin India is sold on the India site only: teaser between services and pricing.
+			array_splice( $home, 3, 0, 'home-product-teaser' );
+		}
 		$id   = $this->upsert(
 			'page',
 			'home',

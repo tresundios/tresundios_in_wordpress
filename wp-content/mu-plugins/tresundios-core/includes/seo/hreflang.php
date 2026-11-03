@@ -17,6 +17,15 @@ defined( 'ABSPATH' ) || exit;
  */
 function tresundios_hreflang_set( $key ) {
 	$alts = tresundios_alternates( $key );
+	/**
+	 * Adjust the alternates for one pairing key, e.g. to map a page whose counterpart has a
+	 * different slug, or return [] to exclude it. Default: the published counterpart from the
+	 * translation_key pairing (works unchanged on both sites).
+	 *
+	 * @param array<string, string> $alts hreflang => URL (this site included).
+	 * @param string                $key  Pairing key.
+	 */
+	$alts = (array) apply_filters( 'tresundios_hreflang_map', $alts, $key );
 	if ( count( $alts ) < 2 ) {
 		return array();
 	}
@@ -27,6 +36,46 @@ function tresundios_hreflang_set( $key ) {
 	}
 	return $alts;
 }
+
+/*
+ * /products/dentalpin/ (sales page on .in) and /work/dentalpin-india/ (case study on .com) are different
+ * pages on purpose, so they are never an hreflang pair. The page has no translation_key, and this
+ * guard keeps it unpaired even if someone adds one.
+ */
+add_filter(
+	'tresundios_hreflang_map',
+	static function ( $alts ) {
+		return function_exists( 'tresundios_is_dentalpin_page' ) && tresundios_is_dentalpin_page() ? array() : $alts;
+	}
+);
+
+/*
+ * Canonical fallback only when Rank Math is not active. WordPress core already prints a canonical on
+ * singular pages (rel_canonical), so this covers archives and terms only. Never a second tag.
+ */
+add_action(
+	'wp_head',
+	static function () {
+		if ( defined( 'RANK_MATH_VERSION' ) || is_singular() || is_404() || is_search() || is_paged() ) {
+			return;
+		}
+		$url = '';
+		if ( is_post_type_archive() ) {
+			$type = get_query_var( 'post_type' );
+			$url  = get_post_type_archive_link( is_array( $type ) ? reset( $type ) : $type );
+		} elseif ( is_tax() || is_category() || is_tag() ) {
+			$link = get_term_link( get_queried_object() );
+			$url  = is_wp_error( $link ) ? '' : $link;
+		} elseif ( is_home() ) {
+			$id  = (int) get_option( 'page_for_posts' );
+			$url = $id ? get_permalink( $id ) : home_url( '/' );
+		}
+		if ( $url ) {
+			printf( '<link rel="canonical" href="%s">' . "\n", esc_url( $url ) );
+		}
+	},
+	1
+);
 
 add_action(
 	'wp_head',
