@@ -1,0 +1,45 @@
+/* Products: /products/, /products/dentalpin/ and the homepage teaser. Kept out of site.min.css (no build step needed). */
+
+/* Product card */
+.product-grid{display:grid;gap:clamp(20px,3vw,32px);grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr))}
+.product-card{padding:clamp(22px,3vw,34px);display:flex;flex-direction:column;gap:14px;box-shadow:8px 8px 0 var(--wp--preset--color--red)!important}
+.product-card h3{font-size:var(--wp--preset--font-size--h3)}
+.product-logo{display:inline-flex;align-self:flex-start;padding:10px 16px;border:var(--wp--custom--border-width) solid var(--wp--preset--color--black);border-radius:12px;background:var(--wp--preset--color--red);box-shadow:var(--wp--preset--shadow--hard-sm)}
+.product-logo-text{font-family:var(--wp--preset--font-family--display);font-size:20px;line-height:1;text-transform:uppercase;color:var(--wp--preset--color--white)}
+.product-card .is-style-checks,.dp-card p{margin:0}
+
+/* Homepage teaser */
+.product-teaser{padding-block:clamp(24px,4vw,48px)}
+.product-teaser-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px 32px;padding:clamp(20px,3vw,32px);border-left:12px solid var(--wp--preset--color--red)!important}
+.product-teaser-inner>.wp-block-group{flex:1 1 420px;display:grid;gap:8px}
+.product-teaser-title{font-size:var(--wp--preset--font-size--h3)}
+.product-teaser-inner p{font-weight:500;max-width:60ch}
+
+/* DentalPin page */
+.dp-crumbs{padding-top:clamp(16px,2vw,24px)}
+.dp-hero h1{max-width:24ch}
+.dp-hero .wp-block-buttons{gap:12px}
+.dp-endorse{margin-top:20px;font-family:var(--wp--preset--font-family--mono);font-size:var(--wp--preset--font-size--small);color:var(--wp--preset--color--grey-4)}
+#main .tr-sec.block>.container>h2{font-size:var(--wp--preset--font-size--h2);margin-bottom:clamp(24px,3vw,40px)}
+#main .tr-sec.block>.container>p{max-width:62ch;font-weight:500;margin-bottom:20px}
+.dp-grid{display:grid;gap:clamp(16px,2.4vw,28px)}
+@media (min-width:768px){.dp-grid-3{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:1100px){.dp-grid-3{grid-template-columns:repeat(3,1fr)}}
+.dp-card{padding:clamp(20px,2.6vw,28px);display:grid;gap:10px;align-content:start}
+.dp-card h3{font-size:var(--wp--preset--font-size--h4)}
+.dp-feature{border-top:8px solid var(--wp--preset--color--red)!important}
+.dp-why{max-width:70ch;font-size:var(--wp--preset--font-size--lede);font-weight:500}
+.dp-why a,.foot-product a{text-decoration-color:var(--wp--preset--color--red);text-decoration-thickness:3px;text-underline-offset:3px;font-weight:700}
+
+/* Free vs paid table: scrolls sideways on narrow phones instead of squashing */
+.dp-table{margin:0;overflow-x:auto;background:var(--wp--preset--color--white);border:var(--wp--custom--border-width) solid var(--wp--preset--color--black);border-radius:var(--wp--custom--radius);box-shadow:var(--wp--preset--shadow--hard)}
+.dp-table table{min-width:520px;width:100%;border-collapse:collapse}
+.dp-table th,.dp-table td{padding:14px 16px;border:0;border-bottom:2px solid var(--wp--preset--color--black);text-align:left;vertical-align:top}
+.dp-table thead th{background:var(--wp--preset--color--black);color:var(--wp--preset--color--white);font-family:var(--wp--preset--font-family--mono);font-size:var(--wp--preset--font-size--label);letter-spacing:.1em;text-transform:uppercase}
+.dp-table tbody tr:first-child{background:var(--wp--preset--color--grey-1);font-weight:700}
+.dp-table tbody tr:last-child td{border-bottom:0}
+.dp-table td:last-child{font-family:var(--wp--preset--font-family--mono);font-weight:700;white-space:nowrap}
+
+/* Buttons stay readable and focusable everywhere */
+.product-card .wp-block-button__link:focus-visible,.product-teaser .wp-block-button__link:focus-visible,.dp-hero .wp-block-button__link:focus-visible{outline:3px solid var(--wp--preset--color--black);outline-offset:3px}
+@media (max-width:480px){.product-teaser .wp-block-buttons,.dp-hero .wp-block-buttons{flex-direction:column;align-items:stretch}.product-teaser .wp-block-button__link,.dp-hero .wp-block-button__link{width:100%;text-align:center}}

@@ -22,6 +22,7 @@ $tresundios_u = static function ( $path ) {
 	<div class="col-md-6 col-lg-4">
 		<a href="<?php echo $tresundios_u( '/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>" aria-label="<?php esc_attr_e( 'Tresundios home', 'tresundios' ); ?>"><img class="logo" src="<?php echo esc_url( get_theme_file_uri( 'assets/img/logo-light.webp' ) ); ?>" alt="Tresundios" width="176" height="30" loading="lazy"></a>
 		<p class="mt-3"><?php esc_html_e( 'Marketing, design, events and technology for small and medium businesses. Enterprise-quality results at SME-friendly prices.', 'tresundios' ); ?></p>
+		<p class="foot-product mt-3"><?php esc_html_e( 'Our products:', 'tresundios' ); ?> <a href="https://www.dentalpin.in/"><?php esc_html_e( 'DentalPin India', 'tresundios' ); ?></a></p>
 	</div>
 	<nav class="col-6 col-md-3 col-lg-2" aria-label="<?php esc_attr_e( 'Services', 'tresundios' ); ?>"><h2 class="foot-h"><?php esc_html_e( 'Services', 'tresundios' ); ?></h2><ul>
 		<li><a href="<?php echo $tresundios_u( '/services/digital-marketing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Digital marketing', 'tresundios' ); ?></a></li>
@@ -33,6 +34,7 @@ $tresundios_u = static function ( $path ) {
 		<li><a href="<?php echo $tresundios_u( '/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Pricing', 'tresundios' ); ?></a></li>
 	</ul></nav>
 	<nav class="col-6 col-md-3 col-lg-2" aria-label="<?php esc_attr_e( 'Company', 'tresundios' ); ?>"><h2 class="foot-h"><?php esc_html_e( 'Company', 'tresundios' ); ?></h2><ul>
+		<li><a href="<?php echo $tresundios_u( '/products/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Products', 'tresundios' ); ?></a></li>
 		<li><a href="<?php echo $tresundios_u( '/work/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Work', 'tresundios' ); ?></a></li>
 		<li><a href="<?php echo $tresundios_u( '/resources/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Resources', 'tresundios' ); ?></a></li>
 		<li><a href="<?php echo $tresundios_u( '/faq/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'FAQ', 'tresundios' ); ?></a></li>

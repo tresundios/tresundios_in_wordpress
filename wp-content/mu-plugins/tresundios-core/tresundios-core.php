@@ -19,6 +19,7 @@ require TRESUNDIOS_CORE_DIR . '/includes/data.php';
 require TRESUNDIOS_CORE_DIR . '/includes/blocks.php';
 require TRESUNDIOS_CORE_DIR . '/includes/enquiry.php';
 require TRESUNDIOS_CORE_DIR . '/includes/perf.php';
+require TRESUNDIOS_CORE_DIR . '/includes/products.php';
 require TRESUNDIOS_CORE_DIR . '/includes/seo/counterparts.php';
 require TRESUNDIOS_CORE_DIR . '/includes/seo/hreflang.php';
 require TRESUNDIOS_CORE_DIR . '/includes/seo/schema.php';
