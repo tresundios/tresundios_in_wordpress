@@ -7,7 +7,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'TRESUNDIOS_CORE_VERSION', '0.1.0' );
+define( 'TRESUNDIOS_CORE_VERSION', '0.1.1' );
 define( 'TRESUNDIOS_CORE_DIR', __DIR__ );
 define( 'TRESUNDIOS_CORE_URL', WPMU_PLUGIN_URL . '/tresundios-core' );
 

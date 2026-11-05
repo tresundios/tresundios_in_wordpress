@@ -22,7 +22,34 @@ const TRESUNDIOS_ENQUIRY_MIN_FILL = 3;   // Seconds a human needs at least to fi
  * @return array<int, string>
  */
 function tresundios_enquiry_services() {
-	return array( 'Website / App', 'Digital Marketing', 'Graphic Design', 'Product Photography', 'Event Management', 'DevOps & Cloud', 'Multiple Services' );
+	return array( 'Free website & growth audit', 'Websites & E-commerce', 'Performance Marketing', 'Brand & Creative', 'Social & Content Growth', 'Apps & Digital Automation', 'Event Management', 'Multiple Services' );
+}
+
+/**
+ * Old service names (still stored on pricing items and in ?service= links) mapped to the 2026 services.
+ *
+ * @return array<string, string>
+ */
+function tresundios_enquiry_service_aliases() {
+	return array(
+		'Website / App'       => 'Websites & E-commerce',
+		'Digital Marketing'   => 'Performance Marketing',
+		'Graphic Design'      => 'Brand & Creative',
+		'Product Photography' => 'Brand & Creative',
+		'DevOps & Cloud'      => 'Apps & Digital Automation',
+	);
+}
+
+/**
+ * Normalise a service name: map legacy names, keep only known options.
+ *
+ * @param string $service Raw name.
+ * @return string Known option or ''.
+ */
+function tresundios_enquiry_normalise_service( $service ) {
+	$aliases = tresundios_enquiry_service_aliases();
+	$service = isset( $aliases[ $service ] ) ? $aliases[ $service ] : $service;
+	return in_array( $service, tresundios_enquiry_services(), true ) ? $service : '';
 }
 
 /**
@@ -109,7 +136,8 @@ function tresundios_handle_enquiry() {
 	if ( '' === $name || '' === $contact ) {
 		tresundios_enquiry_respond( false, __( 'Please add your name and an email or phone number so we can reply.', 'tresundios' ), 422 );
 	}
-	$service = in_array( $service, tresundios_enquiry_services(), true ) ? $service : '-';
+	$service = tresundios_enquiry_normalise_service( $service );
+	$service = '' !== $service ? $service : '-';
 	$budget  = in_array( $budget, tresundios_enquiry_budgets(), true ) ? $budget : 'Not sure yet';
 
 	$ip_raw = isset( $_SERVER['REMOTE_ADDR'] ) ? sanitize_text_field( wp_unslash( $_SERVER['REMOTE_ADDR'] ) ) : 'unknown';

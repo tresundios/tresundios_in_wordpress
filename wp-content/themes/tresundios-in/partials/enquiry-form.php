@@ -14,7 +14,10 @@ wp_enqueue_script( 'tresundios-enquiry' );
 
 $tresundios_status = tresundios_enquiry_status();
 $tresundios_plan   = isset( $_GET['plan'] ) ? sanitize_text_field( rawurldecode( wp_unslash( $_GET['plan'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-$tresundios_svc    = isset( $_GET['service'] ) ? sanitize_text_field( rawurldecode( wp_unslash( $_GET['service'] ) ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+$tresundios_svc    = isset( $_GET['service'] ) ? sanitize_text_field( rawurldecode( wp_unslash( $_GET['service'] ) ) ) : '';
+if ( function_exists( 'tresundios_enquiry_normalise_service' ) ) {
+	$tresundios_svc = tresundios_enquiry_normalise_service( $tresundios_svc );
+} // phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 /* translators: %s: plan name and price. */
 $tresundios_plan_msg = __( 'I’m interested in: %s.', 'tresundios' );
 ?>
@@ -22,7 +25,8 @@ $tresundios_plan_msg = __( 'I’m interested in: %s.', 'tresundios' );
 	data-msg-required="<?php esc_attr_e( 'Please add your name and an email or phone number so we can reply.', 'tresundios' ); ?>"
 	data-msg-sending="<?php esc_attr_e( 'Sending…', 'tresundios' ); ?>"
 	data-msg-failed="<?php echo esc_attr( sprintf( /* translators: 1: email, 2: phone. */ __( 'Could not reach the server. Please email %1$s or WhatsApp %2$s.', 'tresundios' ), tresundios_get( 'contact_email' ), tresundios_get( 'phone' ) ) ); ?>"
-	data-msg-plan="<?php echo esc_attr( $tresundios_plan_msg ); ?>">
+	data-msg-plan="<?php echo esc_attr( $tresundios_plan_msg ); ?>"
+	data-svc-aliases="<?php echo esc_attr( wp_json_encode( function_exists( 'tresundios_enquiry_service_aliases' ) ? tresundios_enquiry_service_aliases() : array() ) ); ?>">
 	<p class="eyebrow"><?php esc_html_e( 'Project enquiry', 'tresundios' ); ?></p>
 	<?php tresundios_enquiry_hidden_fields(); ?>
 	<div class="row g-3 mt-1">
@@ -41,7 +45,7 @@ $tresundios_plan_msg = __( 'I’m interested in: %s.', 'tresundios' );
 			foreach ( tresundios_enquiry_budgets() as $tresundios_opt ) :
 				?>
 				<option><?php echo esc_html( $tresundios_opt ); ?></option><?php endforeach; ?></select></div>
-		<div class="col-12"><label class="form-label" for="f-msg"><?php esc_html_e( 'Tell us about it', 'tresundios' ); ?></label><textarea class="form-control" id="f-msg" name="msg" placeholder="We're opening a second outlet in March and need launch posts, a menu redesign and a small opening event."><?php echo $tresundios_plan ? esc_textarea( sprintf( $tresundios_plan_msg, $tresundios_plan ) ) : ''; ?></textarea></div>
+		<div class="col-12"><label class="form-label" for="f-msg"><?php esc_html_e( 'Tell us about it', 'tresundios' ); ?></label><textarea class="form-control" id="f-msg" name="msg" placeholder="Our clinic website gets visits but few appointment enquiries. We'd like a faster site and Google Ads that we can track."><?php echo $tresundios_plan ? esc_textarea( sprintf( $tresundios_plan_msg, $tresundios_plan ) ) : ''; ?></textarea></div>
 		<div class="d-none" aria-hidden="true"><label><?php esc_html_e( 'Website', 'tresundios' ); ?> <input name="website" tabindex="-1" autocomplete="off"></label></div>
 		<div class="col-12"><button class="btn-tr btn-tr-primary" type="submit"><?php esc_html_e( 'Send my enquiry →', 'tresundios' ); ?></button></div>
 		<div class="col-12"><div class="note<?php echo $tresundios_status && ! $tresundios_status['ok'] ? ' is-error' : ''; ?>" data-enquiry-out role="status" aria-live="polite"<?php echo $tresundios_status ? '' : ' hidden'; ?>><?php echo $tresundios_status ? esc_html( $tresundios_status['message'] ) : ''; ?></div></div>

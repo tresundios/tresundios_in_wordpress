@@ -3,7 +3,7 @@
  * Title: Service grid
  * Slug: tresundios/services
  * Categories: tresundios
- * Description: Black band with the service cards.
+ * Description: Black band with the five integrated service cards, followed by the growth-system section.
  *
  * @package Tresundios\Theme\In
  */
@@ -19,19 +19,51 @@ defined( 'ABSPATH' ) || exit;
 <!-- /wp:paragraph -->
 
 <!-- wp:heading -->
-<h2 class="wp-block-heading">Everything your brand needs to be seen.</h2>
+<h2 class="wp-block-heading">Five services. One growth system.</h2>
 <!-- /wp:heading --></div>
 <!-- /wp:group -->
 
 <!-- wp:paragraph -->
-<p>Digital marketing is not only for big brands. We give SMEs, restaurants, cafés and startups in Chennai the same reach, polish and launch power, without the agency price tag.</p>
+<p>We build websites, e-commerce stores and digital growth systems that turn attention into enquiries, bookings and sales.</p>
 <!-- /wp:paragraph --></div>
-<!-- /wp:group --><!-- wp:tresundios/services-grid /-->
+<!-- /wp:group --><!-- wp:html -->
+<div class="row g-4 row-cols-1 row-cols-md-2 row-cols-xl-3">
+<?php
+$tresundios_i = 0;
+foreach ( tresundios_theme_services() as $tresundios_k => $tresundios_s ) :
+	?>
+	<div class="col">
+		<article class="svc <?php echo in_array( $tresundios_i % 4, array( 0, 3 ), true ) ? 'red' : 'dark'; ?> glass spot">
+			<div class="d-flex justify-content-between align-items-start gap-3">
+				<div class="ic"><?php echo function_exists( 'tresundios_icon' ) ? tresundios_icon( $tresundios_s['icon'] ) : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static SVG. ?></div>
+				<span class="tag"><?php echo esc_html( $tresundios_s['tag'] ); ?></span>
+			</div>
+			<h3><a class="svc-link" href="<?php echo esc_url( home_url( '/services/#' . $tresundios_k ) ); ?>"><?php echo esc_html( $tresundios_s['title'] ); ?></a></h3>
+			<p class="text-muted-tr"><?php echo esc_html( $tresundios_s['headline'] ); ?></p>
+			<ul>
+				<?php foreach ( array_slice( $tresundios_s['items'], 0, 4 ) as $tresundios_item ) : ?>
+					<li><?php echo esc_html( $tresundios_item ); ?></li>
+				<?php endforeach; ?>
+			</ul>
+		</article>
+	</div>
+	<?php
+	++$tresundios_i;
+endforeach;
+?>
+</div>
+<!-- /wp:html -->
 
 <!-- wp:buttons {"className":"mt-4"} -->
 <div class="wp-block-buttons mt-4"><!-- wp:button {"className":"is-style-ghost has-arrow"} -->
-<div class="wp-block-button is-style-ghost has-arrow"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/pricing/' ) ); ?>">View Pricing </a></div>
+<div class="wp-block-button is-style-ghost has-arrow"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/services/' ) ); ?>">Explore all services </a></div>
+<!-- /wp:button -->
+
+<!-- wp:button {"className":"is-style-ghost"} -->
+<div class="wp-block-button is-style-ghost"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( home_url( '/packages/' ) ); ?>">View packages</a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></section>
 <!-- /wp:group -->
+
+<!-- wp:pattern {"slug":"tresundios/growth-system"} /-->

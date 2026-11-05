@@ -89,7 +89,9 @@ function tresundios_llms_txt() {
 	$out   = array();
 	$out[] = '# ' . $s['brand_name'] . ( $india ? ' India' : '' );
 	$out[] = '';
-	$out[] = '> ' . $s['legal_name'] . ' is a DPIIT-recognised startup in Chennai, India, offering digital marketing, graphic design, event management, websites and apps, product photography and DevOps for small and medium businesses. '
+	$out[] = '> ' . $s['legal_name'] . ( $india
+		? ' is a DPIIT-recognised digital studio in Chennai, India. It builds websites, e-commerce stores and digital growth systems for Indian SMEs: Websites & E-commerce, Performance Marketing, Brand & Creative, Social & Content Growth, and Apps & Digital Automation. '
+		: ' is a DPIIT-recognised startup in Chennai, India, offering digital marketing, graphic design, event management, websites and apps, product photography and DevOps for small and medium businesses. ' )
 		. ( $india ? 'This site serves India; prices are in INR excluding GST.' : 'This site serves international clients; prices are in USD.' );
 	$out[] = '';
 	$out[] = sprintf( 'Contact: %s · %s · %s, %s %s, %s, India. CIN %s, GSTIN %s.', $s['contact_email'], $s['phone'], $s['street_address'], $s['locality'], $s['postal_code'], $s['region_name'], $s['cin'], $s['gstin'] );

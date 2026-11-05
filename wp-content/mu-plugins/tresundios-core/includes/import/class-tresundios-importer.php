@@ -946,8 +946,8 @@ class Tresundios_Importer {
 		// Home: the original one-page layout, now a summary that links to each section page.
 		$home = array( 'hero', 'marquee', 'services', 'pricing', 'work', 'process', 'about', 'testimonial', 'trust', 'contact' );
 		if ( $this->india ) {
-			// DentalPin India is sold on the India site only: teaser between services and pricing.
-			array_splice( $home, 3, 0, 'home-product-teaser' );
+			// 2026 restructure (India): packages teaser instead of the pricing table; DentalPin only in the footer.
+			$home[3] = 'packages-home';
 		}
 		$id   = $this->upsert(
 			'page',
@@ -955,7 +955,7 @@ class Tresundios_Importer {
 			array(
 				'post_title'   => 'Home',
 				'post_excerpt' => $this->india
-					? 'Tresundios helps small and medium businesses in Chennai grow with digital marketing, graphic design, event management, websites and apps. DPIIT-recognised startup.'
+					? 'Chennai-based digital studio for ambitious SMEs. Tresundios builds websites, e-commerce stores and digital growth systems that turn attention into enquiries, bookings and sales. DPIIT-recognised startup.'
 					: 'Tresundios helps businesses grow with digital marketing, graphic design, product photography, events, websites and apps, with transparent USD pricing. DPIIT-recognised startup in Chennai.',
 				'post_content' => implode(
 					"\n\n",

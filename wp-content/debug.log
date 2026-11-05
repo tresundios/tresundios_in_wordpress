@@ -1,0 +1,4 @@
+[05-Nov-2026 18:02:40 UTC] Cron reschedule event error for hook: action_scheduler_run_queue, Error code: invalid_schedule, Error message: Event schedule does not exist., Data: {"schedule":"every_minute","args":["WP Cron"],"interval":60}
+[05-Nov-2026 18:02:41 UTC] Automatic updates starting...
+[05-Nov-2026 18:02:42 UTC] Automatic updates complete.
+[05-Nov-2026 18:02:42 UTC] Cron reschedule event error for hook: clarity_collect_batch_cron, Error code: invalid_schedule, Error message: Event schedule does not exist., Data: {"schedule":"clarity_request_recurrence","args":[],"interval":300}
