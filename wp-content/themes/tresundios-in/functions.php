@@ -245,3 +245,37 @@ add_action(
 	},
 	20
 );
+
+/**
+ * Highlight the current section in the header menu. The menu uses custom links, which WordPress
+ * never marks as current, so match the link path against the request path (sub-pages count:
+ * /work/<case>/ highlights Work, /services/<service>/ highlights Services). Home matches only "/".
+ */
+add_filter(
+	'render_block_core/navigation-link',
+	static function ( $html, $block ) {
+		$url = $block['attrs']['url'] ?? '';
+		if ( ! $url || false !== strpos( $html, 'aria-current' ) ) {
+			return $html;
+		}
+		$link = trailingslashit( (string) wp_parse_url( $url, PHP_URL_PATH ) );
+		$req  = trailingslashit( (string) wp_parse_url( isset( $_SERVER['REQUEST_URI'] ) ? esc_url_raw( wp_unslash( $_SERVER['REQUEST_URI'] ) ) : '/', PHP_URL_PATH ) );
+		$home = trailingslashit( (string) wp_parse_url( home_url( '/' ), PHP_URL_PATH ) );
+		$hit  = $link === $home ? $req === $home : 0 === strpos( $req, $link );
+		// Legacy/related URLs that belong to a menu section.
+		$aliases = array(
+			'/packages/' => array( '/pricing/' ),
+			'/work/'     => array( '/work-type/' ),
+		);
+		foreach ( $aliases[ $link ] ?? array() as $alias ) {
+			$hit = $hit || 0 === strpos( $req, $alias );
+		}
+		if ( ! $hit ) {
+			return $html;
+		}
+		$html = preg_replace( '/class="wp-block-navigation-item /', 'class="wp-block-navigation-item current-menu-item ', $html, 1 );
+		return preg_replace( '/<a /', '<a aria-current="page" ', $html, 1 );
+	},
+	10,
+	2
+);
