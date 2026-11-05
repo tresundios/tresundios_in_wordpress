@@ -43,20 +43,29 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:html -->
 <div class="col-lg-5">
-	<div class="hero-stack mx-auto" aria-hidden="true">
-		<img class="hero-anchor" src="<?php echo esc_url( get_theme_file_uri( 'assets/img/icon.webp' ) ); ?>" alt="" width="132" height="132" fetchpriority="high">
-		<div class="glass float a spot">
+	<div class="hero-stack scene3d mx-auto" data-scene3d>
+		<div class="cube-wrap" aria-hidden="true">
+			<div class="cube" data-cube>
+				<div class="face f-front"><img src="<?php echo esc_url( get_theme_file_uri( 'assets/img/icon.webp' ) ); ?>" alt="" width="96" height="96" fetchpriority="high"></div>
+				<div class="face f-back">Apps</div>
+				<div class="face f-right">Web</div>
+				<div class="face f-left">Ads</div>
+				<div class="face f-top">Brand</div>
+				<div class="face f-bottom">Growth</div>
+			</div>
+		</div>
+		<div class="glass float a spot" aria-hidden="true" data-depth="60">
 			<div class="dots"><i></i><i></i><i></i></div>
 			<div class="mini-title">Enquiry sources · tracked</div>
 			<div class="kpi" style="font-size:26px">WhatsApp · Call · Form</div>
 			<div class="bars"><span style="height:40%"></span><span style="height:55%"></span><span style="height:48%"></span><span style="height:62%"></span><span style="height:70%"></span><span style="height:78%"></span><span style="height:90%"></span></div>
 		</div>
-		<div class="glass float b spot">
+		<div class="glass float b spot" aria-hidden="true" data-depth="30">
 			<div class="mini-title">Brand kit</div>
 			<div class="d-flex gap-2 mt-3"><span class="swatch" style="background:#c74634"></span><span class="swatch" style="background:#666666"></span><span class="swatch" style="background:#ffffff"></span><span class="swatch" style="background:#000000"></span></div>
 			<div class="display-face mt-3" style="font-size:22px;font-weight:600">Aa Bb</div>
 		</div>
-		<div class="glass float c spot">
+		<div class="glass float c spot" aria-hidden="true" data-depth="90">
 			<div class="mini-title">Store checkout</div>
 			<div class="kpi" style="font-size:26px">Mobile-first</div>
 			<div class="text-muted-tr" style="font-size:13px">Speed · tracking · UX review</div>

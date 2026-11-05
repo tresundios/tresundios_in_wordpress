@@ -19,7 +19,7 @@ add_action(
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list', 'gallery', 'caption', 'style', 'script' ) );
 		remove_theme_support( 'core-block-patterns' );
-		add_editor_style( array( 'assets/css/base.css', 'assets/css/site.css', 'assets/css/products.css' ) );
+		add_editor_style( array( 'assets/css/base.css', 'assets/css/site.css', 'assets/css/products.css', 'assets/css/immersive.css' ) );
 		add_post_type_support( 'page', 'excerpt' );
 	}
 );
@@ -123,6 +123,9 @@ add_action(
 			'in_footer' => true,
 		);
 		wp_enqueue_script( 'tresundios-site', get_theme_file_uri( 'assets/js/site.js' ), array(), $v, $defer );
+		// 2026 "3D & immersive" layer: CSS 3D + a small script, no WebGL library. Off under prefers-reduced-motion.
+		wp_enqueue_style( 'tresundios-immersive', get_theme_file_uri( 'assets/css/immersive.css' ), array( 'tresundios-products' ), $v . '.' . filemtime( get_theme_file_path( 'assets/css/immersive.css' ) ) );
+		wp_enqueue_script( 'tresundios-immersive', get_theme_file_uri( 'assets/js/immersive.js' ), array(), $v . '.' . filemtime( get_theme_file_path( 'assets/js/immersive.js' ) ), $defer );
 		if ( is_front_page() || is_post_type_archive( 'case_study' ) ) {
 			wp_enqueue_script( 'tresundios-work', get_theme_file_uri( 'assets/js/work.js' ), array(), $v, $defer );
 		}

@@ -1,0 +1,49 @@
+/* Tresundios .in: "3D & immersive" layer (Figma web-design trend 1).
+   Existing palette only: --red, --black, --white, grays. CSS 3D transforms, no WebGL.
+   Everything degrades to the flat design without JS or with prefers-reduced-motion. */
+
+/* ---------- Hero scene: layered depth + rotatable cube ---------- */
+.scene3d{perspective:1100px;transform-style:preserve-3d}
+.scene3d .float{transition:transform .25s ease-out;will-change:transform}
+.js-3d .scene3d .float.a{transform:rotate(2deg) translate3d(var(--px,0),var(--py,0),60px)}
+.js-3d .scene3d .float.b{transform:rotate(-3deg) translate3d(calc(var(--px,0) * .5),calc(var(--py,0) * .5),30px)}
+.js-3d .scene3d .float.c{transform:rotate(3deg) translate3d(calc(var(--px,0) * 1.5),calc(var(--py,0) * 1.5),90px)}
+
+.cube-wrap{position:absolute;right:-6px;top:26%;z-index:4;width:132px;height:132px;perspective:700px;cursor:grab;touch-action:pan-y}
+.cube-wrap:active{cursor:grabbing}
+.cube{--s:132px;--h:66px;position:relative;width:var(--s);height:var(--s);transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(28deg);animation:cube-spin 16s linear infinite}
+.cube.is-dragging,.cube.is-manual{animation:none}
+.face{position:absolute;inset:0;display:grid;place-items:center;border:var(--bw) solid var(--black);font-family:var(--f-display);font-size:20px;text-transform:uppercase;letter-spacing:-.02em;backface-visibility:hidden;user-select:none}
+.face img{width:72%;height:auto;border-radius:50%}
+.f-front{background:var(--white);transform:translateZ(var(--h))}
+.f-back{background:var(--black);color:var(--white);transform:rotateY(180deg) translateZ(var(--h))}
+.f-right{background:var(--red);color:var(--white);transform:rotateY(90deg) translateZ(var(--h))}
+.f-left{background:var(--gray-1,#f2f2f2);color:var(--black);transform:rotateY(-90deg) translateZ(var(--h))}
+.f-top{background:var(--red);color:var(--white);transform:rotateX(90deg) translateZ(var(--h))}
+.f-bottom{background:var(--black);color:var(--white);transform:rotateX(-90deg) translateZ(var(--h))}
+.cube-wrap::after{content:"";position:absolute;left:10%;right:10%;bottom:-34px;height:16px;border-radius:50%;background:rgba(0,0,0,.18);filter:blur(6px);transform:translateZ(-1px)}
+@keyframes cube-spin{from{transform:rotateX(-18deg) rotateY(0)}to{transform:rotateX(-18deg) rotateY(360deg)}}
+@media (max-width:575.98px){.cube-wrap{width:96px;height:96px;right:4px;top:20%}.cube{--s:96px;--h:48px}.face{font-size:14px}}
+
+/* ---------- Card tilt with glare (JS sets --rx/--ry/--gx/--gy) ---------- */
+.js-3d [data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .2s;transform-style:preserve-3d;will-change:transform}
+.js-3d [data-tilt].is-tilting{transition:transform .08s linear,box-shadow .2s}
+.js-3d [data-tilt]::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.28),transparent 55%);opacity:0;transition:opacity .2s}
+.js-3d [data-tilt].is-tilting::before{opacity:1}
+.js-3d [data-tilt] .ic,.js-3d [data-tilt] .price-amount,.js-3d [data-tilt] .growth-n{transform:translateZ(28px)}
+.js-3d .svc[data-tilt],.js-3d .price-card[data-tilt],.js-3d .growth-grid li[data-tilt],.js-3d .cred[data-tilt]{position:relative}
+
+/* ---------- Scroll-triggered depth reveal ---------- */
+.js-3d .depth-in:not(.is-in){opacity:0;transform:perspective(1200px) rotateX(14deg) translate3d(0,48px,-60px);transform-origin:50% 100%}
+.js-3d .depth-in{transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.js-3d .depth-in.is-in{opacity:1}
+
+/* Stats band: slight 3D lift */
+.js-3d .stats{transform:perspective(1000px) rotateX(6deg);transform-origin:50% 0;transition:transform .6s}
+.js-3d .stats.is-in{transform:perspective(1000px) rotateX(0)}
+
+/* ---------- Respect motion preferences ---------- */
+@media (prefers-reduced-motion:reduce){
+  .cube{animation:none}
+  .js-3d [data-tilt],.js-3d .depth-in,.js-3d .stats,.js-3d .scene3d .float{transform:none!important;opacity:1!important;transition:none!important}
+}
