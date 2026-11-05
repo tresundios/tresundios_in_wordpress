@@ -139,3 +139,25 @@ section.block.tight.pt-0{padding-top:0}
 .result.result-delivery{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px}
 .result.result-delivery b{margin:0}
 .case-page .order-first{order:-1}
+
+/* ---------- Header: 8 menu items on one line at laptop widths ---------- */
+.tr-navbar .cta-short{display:none}
+@media (min-width:992px) and (max-width:1535.98px){
+  .tr-nav .wp-block-navigation-item__content{padding:8px 9px;font-size:13px;letter-spacing:.01em}
+  .tr-navbar .cta-long{display:none}
+  .tr-navbar .cta-short{display:inline}
+  .tr-navbar .wp-block-button__link{white-space:nowrap}
+}
+@media (min-width:992px) and (max-width:1139.98px){
+  .tr-nav .wp-block-navigation-item__content{padding:7px 6px;font-size:12px}
+  .navbar-brand .logo{width:140px;height:auto}
+}
+@media (min-width:992px){
+  .tr-navbar{flex-wrap:nowrap}
+  .navbar-brand{flex:none;margin-right:12px}
+  .tr-menu{min-width:0;flex:1 1 auto}
+  .tr-nav .wp-block-navigation__container{flex-wrap:nowrap}
+  .tr-nav .wp-block-navigation-item__content{white-space:nowrap}
+}
+@media (min-width:992px){.tr-navbar .wp-block-button__link{white-space:nowrap}}
+@media (min-width:992px){.tr-navbar .cta-long{display:none}.tr-navbar .cta-short{display:inline}}

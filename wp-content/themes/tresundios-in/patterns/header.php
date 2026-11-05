@@ -28,6 +28,7 @@ defined( 'ABSPATH' ) || exit;
 <!-- wp:navigation-link {"label":"Home","url":"<?php echo esc_url( home_url( '/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Services","url":"<?php echo esc_url( home_url( '/services/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Work","url":"<?php echo esc_url( home_url( '/work/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
+<!-- wp:navigation-link {"label":"Resources","url":"<?php echo esc_url( home_url( '/resources/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Packages","url":"<?php echo esc_url( home_url( '/packages/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"Process","url":"<?php echo esc_url( home_url( '/process/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
 <!-- wp:navigation-link {"label":"About","url":"<?php echo esc_url( home_url( '/about/' ) ); ?>","kind":"custom","isTopLevelLink":true} /-->
@@ -36,7 +37,7 @@ defined( 'ABSPATH' ) || exit;
 
 <!-- wp:buttons -->
 <div class="wp-block-buttons"><!-- wp:button -->
-<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( is_front_page() ? '#audit' : home_url( '/contact/#audit' ) ); ?>" data-track="cta_click" data-track-location="header"><?php esc_html_e( 'Free website & growth audit', 'tresundios' ); ?></a></div>
+<div class="wp-block-button"><a class="wp-block-button__link wp-element-button" href="<?php echo esc_url( is_front_page() ? '#audit' : home_url( '/contact/#audit' ) ); ?>" data-track="cta_click" data-track-location="header"><span class="cta-long"><?php esc_html_e( 'Free website & growth audit', 'tresundios' ); ?></span><span class="cta-short"><?php esc_html_e( 'Free audit', 'tresundios' ); ?></span></a></div>
 <!-- /wp:button --></div>
 <!-- /wp:buttons --></div>
 <!-- /wp:group --></div>

@@ -266,6 +266,7 @@ add_filter(
 		$aliases = array(
 			'/packages/' => array( '/pricing/' ),
 			'/work/'     => array( '/work-type/' ),
+			'/resources/' => array( '/faq/', '/glossary/', '/blog/' ),
 		);
 		foreach ( $aliases[ $link ] ?? array() as $alias ) {
 			$hit = $hit || 0 === strpos( $req, $alias );
