@@ -62,12 +62,68 @@
 .hero:hover .hero-title .grad{transform:rotate(-3deg) scale(1.03)}
 
 /* load-in: each line rises from depth, then the scribble draws */
-.js-3d .ht-line{opacity:0;transform:perspective(800px) rotateX(55deg) translateY(.5em);transform-origin:50% 100%;animation:ht-rise .8s cubic-bezier(.2,.8,.2,1) forwards;animation-delay:calc(var(--d) * 120ms + 80ms)}
-.js-3d .ht-scribble path{stroke-dashoffset:240;animation:ht-draw .9s ease-out .7s forwards}
-@keyframes ht-rise{to{opacity:1;transform:none}}
-@keyframes ht-draw{to{stroke-dashoffset:0}}
+.js-3d .ht-line{transform-origin:50% 100%;animation:ht-rise .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d) * 120ms + 80ms)}
+.js-3d .ht-scribble path{animation:ht-draw .9s ease-out .7s both}
+@keyframes ht-rise{from{transform:perspective(800px) rotateX(40deg) translateY(.35em)}to{transform:none}}
+@keyframes ht-draw{from{stroke-dashoffset:240}to{stroke-dashoffset:0}}
 @media (prefers-reduced-motion:reduce){
   .js-3d .ht-line{opacity:1;transform:none;animation:none}
   .js-3d .ht-scribble path{stroke-dashoffset:0;animation:none}
   .hero:hover .hero-title .grad{transform:rotate(-1.5deg)}
+}
+
+/* ---------- Fixes: headline wrap, cube in front ---------- */
+.hero h1.hero-title{font-size:clamp(28px,3.7vw,52px);max-width:none}
+.ht-line{white-space:normal}
+.scene3d .cube-wrap{top:-36px;right:8px;z-index:6;transform:translateZ(180px)}
+@media (max-width:991.98px){.scene3d .cube-wrap{top:-28px;right:0}}
+.hero .col-lg-7{min-width:0}
+.hero-stack{max-width:100%}
+@media (max-width:575.98px){.hero-stack{min-height:360px}.float.a{right:6%}}
+
+/* ---------- Site-wide spacing rhythm ---------- */
+/* hero: one clear CTA row, a quieter contact row, then trust chips */
+.hero .lede{margin-top:20px!important;max-width:54ch}
+.hero .wp-block-buttons{margin-top:28px!important;gap:12px}
+.lead-btns{align-items:center;gap:8px;margin-top:20px}
+.lead-label{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.lead-btns .btn-tr{min-height:40px;padding:8px 14px;font-size:13px;box-shadow:var(--sh-sm)}
+.hero .trust-chips{margin-top:20px!important;gap:8px!important}
+.audit-band .lead-btns .lead-label,.foot .lead-btns .lead-label{display:none}
+.foot .lead-btns{margin-top:16px}
+
+/* section heads: wider headings, consistent gap to content */
+.sec-head{align-items:flex-end;gap:16px 48px;margin-bottom:clamp(32px,4vw,48px)}
+.sec-head h2{max-width:22ch;margin-top:12px}
+.sec-head > p,.sec-head p:not(.eyebrow){max-width:52ch;margin:0;line-height:1.6}
+.tr-sec .wp-block-buttons.mt-4{margin-top:clamp(28px,3vw,40px)!important;gap:12px}
+
+/* consistent vertical rhythm between sections */
+.tr-sec.block{padding-block:clamp(56px,7vw,96px)}
+section.block.tight{padding-block:clamp(32px,4vw,56px)}
+section.block.tight.pt-0{padding-top:0}
+
+/* services: 5th card spans the row instead of sitting alone */
+#services .row > .col:last-child:nth-child(odd){flex:0 0 100%;max-width:100%}
+#services .svc ul{margin-top:auto}
+
+/* growth grid + packages: even gutters */
+.growth-grid{gap:16px}
+.pkg-grid{gap:24px}
+.pkg-card .price-features{margin-block:10px 0}
+.svc-stack{gap:24px}
+.svc-detail .lede{margin-bottom:0}
+.svc-detail-foot{padding-top:20px;border-top:2px solid var(--black);margin-top:28px}
+
+/* readable paragraphs everywhere */
+.prose p,.case-block p,.text-muted-tr{line-height:1.65}
+
+/* ---------- Mobile hero: fewer layers, nothing overlapping ---------- */
+@media (max-width:991.98px){.scene3d .cube-wrap{top:-24px;right:16px}}
+@media (max-width:575.98px){
+  .hero-stack{min-height:300px;margin-top:8px}
+  .float.a{left:0;right:18%;top:24px}
+  .float.b,.float.c{display:none}
+  .scene3d .cube-wrap{top:-8px;right:14px;transform:translateZ(120px)}
+  .hero .stats{margin-top:8px}
 }

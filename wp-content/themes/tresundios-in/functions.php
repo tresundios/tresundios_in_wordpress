@@ -81,7 +81,7 @@ function tresundios_lead_links( $context = 'site' ) {
  * @param string $context Where the row sits (hero, audit, package-launch …).
  */
 function tresundios_lead_buttons( $context = 'site' ) {
-	echo '<div class="lead-btns" role="group" aria-label="' . esc_attr__( 'Contact options', 'tresundios' ) . '">';
+	echo '<div class="lead-btns" role="group" aria-label="' . esc_attr__( 'Contact options', 'tresundios' ) . '"><span class="lead-label">' . esc_html__( 'Or reach us:', 'tresundios' ) . '</span>';
 	foreach ( tresundios_lead_links( $context ) as $channel => $l ) {
 		if ( ! $l['url'] ) {
 			continue;

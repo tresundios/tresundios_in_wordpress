@@ -21,8 +21,8 @@ $tresundios_points = array(
 	'Custom analytics dashboards',
 );
 ?>
-<!-- wp:group {"tagName":"section","anchor":"growth-system","className":"block tight tr-sec","layout":{"type":"default"}} -->
-<section id="growth-system" class="wp-block-group block tight tr-sec"><!-- wp:group {"className":"container","layout":{"type":"default"}} -->
+<!-- wp:group {"tagName":"section","anchor":"growth-system","className":"block tr-sec","layout":{"type":"default"}} -->
+<section id="growth-system" class="wp-block-group block tr-sec"><!-- wp:group {"className":"container","layout":{"type":"default"}} -->
 <div class="wp-block-group container"><!-- wp:group {"className":"sec-head","layout":{"type":"default"}} -->
 <div class="wp-block-group sec-head"><!-- wp:group {"layout":{"type":"default"}} -->
 <div class="wp-block-group"><!-- wp:paragraph {"className":"eyebrow"} -->
