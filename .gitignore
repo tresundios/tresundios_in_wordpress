@@ -1,1 +1,4 @@
 wp-config.php
+wp-config-local.php
+wp-config.php.bak-before-local
+db/

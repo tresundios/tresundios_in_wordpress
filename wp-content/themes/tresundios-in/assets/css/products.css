@@ -44,3 +44,36 @@
 .product-card .wp-block-button__link:focus-visible,.product-teaser .wp-block-button__link:focus-visible,.dp-hero .wp-block-button__link:focus-visible{outline:3px solid var(--wp--preset--color--black);outline-offset:3px}
 @media (max-width:480px){.product-teaser .wp-block-buttons,.dp-hero .wp-block-buttons{flex-direction:column;align-items:stretch}.product-teaser .wp-block-button__link,.dp-hero .wp-block-button__link{width:100%;text-align:center}}
 .dp-table-note{margin-top:16px;font-size:var(--wp--preset--font-size--small);color:var(--wp--preset--color--grey-4)}
+
+/* ---------- 2026 restructure: services, packages, growth, audit (reuses existing tokens) ---------- */
+.lead-btns{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}
+.lead-btns .btn-tr{min-height:44px}
+.trust-chips{margin:0;padding:0}
+.anchor-alias{display:block;position:relative;top:-24px}
+#audit{scroll-margin-top:24px}
+.audit-list{margin:8px 0 0}
+.audit-band .lines{margin-top:20px}
+
+.svc-stack{display:grid;gap:clamp(20px,3vw,32px)}
+.svc-jump ul{margin:0;padding:0}
+.svc-jump .chip{text-decoration:none;color:inherit}
+.svc-detail{padding:clamp(22px,3vw,36px);scroll-margin-top:24px}
+.svc-detail h2{font-size:clamp(24px,3vw,36px)}
+.svc-deliverables{margin-top:8px}
+.svc-detail-foot{display:flex;flex-wrap:wrap;gap:10px;margin-top:24px}
+
+.growth-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:0;padding:0}
+@media (min-width:576px){.growth-grid{grid-template-columns:repeat(2,1fr)}}
+@media (min-width:992px){.growth-grid{grid-template-columns:repeat(4,1fr)}}
+.growth-grid li{padding:18px;font-weight:700;display:flex;gap:12px;align-items:flex-start}
+.growth-n{font-family:var(--f-mono);font-size:12px;color:var(--red-deep);flex:none;margin-top:3px}
+
+.pkg-grid{display:grid;grid-template-columns:1fr;gap:20px}
+@media (min-width:992px){.pkg-grid{grid-template-columns:repeat(3,1fr)}}
+.pkg-sub{font-family:var(--f-mono);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--red-deep);margin:18px 0 0}
+.pkg-outcome{font-size:14px;margin:16px 0 18px;padding-top:12px;border-top:2px solid var(--black)}
+.pkg-card .price-cta{margin-top:auto}
+
+.case-step{font-family:var(--f-mono);font-size:12px;color:var(--red-deep);margin-right:6px}
+.result-placeholder,.result.result-placeholder{background:#fff6d6;border:2px dashed var(--black);font-weight:700}
+.legacy-note{margin-top:16px;max-width:70ch}

@@ -23,7 +23,19 @@
 		show( form.dataset.msgSending, true );
 		fetch( form.action, { method: 'POST', body: d, headers: { Accept: 'application/json' }, credentials: 'same-origin' } )
 			.then( function ( r ) { return r.json(); } )
-			.then( function ( j ) { show( j.message, j.ok ); if ( j.ok ) form.reset(); } )
+			.then( function ( j ) {
+				show( j.message, j.ok );
+				if ( j.ok ) {
+					/* GA4 / GTM hook (see themes/tresundios-in/docs/ANALYTICS.md). Only pushes to an existing dataLayer; loads nothing. */
+					var svcField = form.querySelector( '[name="svc"]' );
+					if ( window.dataLayer && window.dataLayer.push ) {
+						window.dataLayer.push( { event: 'generate_lead', form_id: 'enquiry', service: svcField ? svcField.value : '' } );
+					} else if ( typeof window.gtag === 'function' ) {
+						window.gtag( 'event', 'generate_lead', { form_id: 'enquiry', service: svcField ? svcField.value : '' } );
+					}
+					form.reset();
+				}
+			} )
 			.catch( function () { show( form.dataset.msgFailed, false ); } )
 			.then( function () { btn.disabled = false; } );
 	} );
@@ -35,7 +47,11 @@
 		e.preventDefault();
 		form.scrollIntoView( { behavior: 'smooth', block: 'start' } );
 		var svc = form.querySelector( '[name="svc"]' ), msg = form.querySelector( '[name="msg"]' );
-		if ( svc && a.dataset.service ) svc.value = a.dataset.service;
+		if ( svc && a.dataset.service ) {
+			var map = {};
+			try { map = JSON.parse( form.dataset.svcAliases || '{}' ); } catch ( err ) {}
+			svc.value = map[ a.dataset.service ] || a.dataset.service;
+		}
 		if ( msg && ( ! msg.value.trim() || msg.dataset.prefill === msg.value ) ) {
 			msg.value = form.dataset.msgPlan.replace( '%s', a.dataset.plan );
 			msg.dataset.prefill = msg.value;

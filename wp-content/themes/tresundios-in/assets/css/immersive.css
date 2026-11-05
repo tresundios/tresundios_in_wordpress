@@ -1,0 +1,163 @@
+/* Tresundios .in: "3D & immersive" layer (Figma web-design trend 1).
+   Existing palette only: --red, --black, --white, grays. CSS 3D transforms, no WebGL.
+   Everything degrades to the flat design without JS or with prefers-reduced-motion. */
+
+/* ---------- Hero scene: layered depth + rotatable cube ---------- */
+.scene3d{perspective:1100px;transform-style:preserve-3d}
+.scene3d .float{transition:transform .25s ease-out;will-change:transform}
+.js-3d .scene3d .float.a{transform:rotate(2deg) translate3d(var(--px,0),var(--py,0),60px)}
+.js-3d .scene3d .float.b{transform:rotate(-3deg) translate3d(calc(var(--px,0) * .5),calc(var(--py,0) * .5),30px)}
+.js-3d .scene3d .float.c{transform:rotate(3deg) translate3d(calc(var(--px,0) * 1.5),calc(var(--py,0) * 1.5),90px)}
+
+.cube-wrap{position:absolute;right:-6px;top:26%;z-index:4;width:132px;height:132px;perspective:700px;cursor:grab;touch-action:pan-y}
+.cube-wrap:active{cursor:grabbing}
+.cube{--s:132px;--h:66px;position:relative;width:var(--s);height:var(--s);transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(28deg);animation:cube-spin 16s linear infinite}
+.cube.is-dragging,.cube.is-manual{animation:none}
+.face{position:absolute;inset:0;display:grid;place-items:center;border:var(--bw) solid var(--black);font-family:var(--f-display);font-size:20px;text-transform:uppercase;letter-spacing:-.02em;backface-visibility:hidden;user-select:none}
+.face img{width:72%;height:auto;border-radius:50%}
+.f-front{background:var(--white);transform:translateZ(var(--h))}
+.f-back{background:var(--black);color:var(--white);transform:rotateY(180deg) translateZ(var(--h))}
+.f-right{background:var(--red);color:var(--white);transform:rotateY(90deg) translateZ(var(--h))}
+.f-left{background:var(--gray-1,#f2f2f2);color:var(--black);transform:rotateY(-90deg) translateZ(var(--h))}
+.f-top{background:var(--red);color:var(--white);transform:rotateX(90deg) translateZ(var(--h))}
+.f-bottom{background:var(--black);color:var(--white);transform:rotateX(-90deg) translateZ(var(--h))}
+.cube-wrap::after{content:"";position:absolute;left:10%;right:10%;bottom:-34px;height:16px;border-radius:50%;background:rgba(0,0,0,.18);filter:blur(6px);transform:translateZ(-1px)}
+@keyframes cube-spin{from{transform:rotateX(-18deg) rotateY(0)}to{transform:rotateX(-18deg) rotateY(360deg)}}
+@media (max-width:575.98px){.cube-wrap{width:96px;height:96px;right:4px;top:20%}.cube{--s:96px;--h:48px}.face{font-size:14px}}
+
+/* ---------- Card tilt with glare (JS sets --rx/--ry/--gx/--gy) ---------- */
+.js-3d [data-tilt]{transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .2s;transform-style:preserve-3d;will-change:transform}
+.js-3d [data-tilt].is-tilting{transition:transform .08s linear,box-shadow .2s}
+.js-3d [data-tilt]::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:3;background:radial-gradient(circle at var(--gx,50%) var(--gy,50%),rgba(255,255,255,.28),transparent 55%);opacity:0;transition:opacity .2s}
+.js-3d [data-tilt].is-tilting::before{opacity:1}
+.js-3d [data-tilt] .ic,.js-3d [data-tilt] .price-amount,.js-3d [data-tilt] .growth-n{transform:translateZ(28px)}
+.js-3d .svc[data-tilt],.js-3d .price-card[data-tilt],.js-3d .growth-grid li[data-tilt],.js-3d .cred[data-tilt]{position:relative}
+
+/* ---------- Scroll-triggered depth reveal ---------- */
+.js-3d .depth-in:not(.is-in){opacity:0;transform:perspective(1200px) rotateX(14deg) translate3d(0,48px,-60px);transform-origin:50% 100%}
+.js-3d .depth-in{transition:opacity .7s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
+.js-3d .depth-in.is-in{opacity:1}
+
+/* Stats band: slight 3D lift */
+.js-3d .stats{transform:perspective(1000px) rotateX(6deg);transform-origin:50% 0;transition:transform .6s}
+.js-3d .stats.is-in{transform:perspective(1000px) rotateX(0)}
+
+/* ---------- Respect motion preferences ---------- */
+@media (prefers-reduced-motion:reduce){
+  .cube{animation:none}
+  .js-3d [data-tilt],.js-3d .depth-in,.js-3d .stats,.js-3d .scene3d .float{transform:none!important;opacity:1!important;transition:none!important}
+}
+
+/* ---------- Hero headline: compact, layered, kinetic ---------- */
+.hero h1.hero-title{font-size:clamp(30px,4.4vw,58px);line-height:1.08;max-width:16ch;text-wrap:initial}
+.ht-line{display:block;white-space:nowrap}
+@media (max-width:420px){.ht-line{white-space:normal}}
+.ht-chip{display:inline-block;background:var(--black);color:var(--white);padding:0 .22em;border-radius:.18em;transform:rotate(2deg);box-shadow:3px 3px 0 var(--red)}
+.ht-outline{color:transparent;-webkit-text-stroke:2px var(--black);paint-order:stroke}
+@supports not (-webkit-text-stroke:1px black){.ht-outline{color:var(--black)}}
+.ht-mark{position:relative;display:inline-block;color:var(--red-deep)}
+.ht-scribble{position:absolute;left:-2%;bottom:-.14em;width:104%;height:.32em;overflow:visible}
+.ht-scribble path{fill:none;stroke:var(--red);stroke-width:5;stroke-linecap:round;stroke-dasharray:240;stroke-dashoffset:0}
+.hero-title .grad{font-size:.92em;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.hero:hover .hero-title .grad{transform:rotate(-3deg) scale(1.03)}
+
+/* load-in: each line rises from depth, then the scribble draws */
+.js-3d .ht-line{transform-origin:50% 100%;animation:ht-rise .8s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d) * 120ms + 80ms)}
+.js-3d .ht-scribble path{animation:ht-draw .9s ease-out .7s both}
+@keyframes ht-rise{from{transform:perspective(800px) rotateX(40deg) translateY(.35em)}to{transform:none}}
+@keyframes ht-draw{from{stroke-dashoffset:240}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){
+  .js-3d .ht-line{opacity:1;transform:none;animation:none}
+  .js-3d .ht-scribble path{stroke-dashoffset:0;animation:none}
+  .hero:hover .hero-title .grad{transform:rotate(-1.5deg)}
+}
+
+/* ---------- Fixes: headline wrap, cube in front ---------- */
+.hero h1.hero-title{font-size:clamp(28px,3.7vw,52px);max-width:none}
+.ht-line{white-space:normal}
+.scene3d .cube-wrap{top:-36px;right:8px;z-index:6;transform:translateZ(180px)}
+@media (max-width:991.98px){.scene3d .cube-wrap{top:-28px;right:0}}
+.hero .col-lg-7{min-width:0}
+.hero-stack{max-width:100%}
+@media (max-width:575.98px){.hero-stack{min-height:360px}.float.a{right:6%}}
+
+/* ---------- Site-wide spacing rhythm ---------- */
+/* hero: one clear CTA row, a quieter contact row, then trust chips */
+.hero .lede{margin-top:20px!important;max-width:54ch}
+.hero .wp-block-buttons{margin-top:28px!important;gap:12px}
+.lead-btns{align-items:center;gap:8px;margin-top:20px}
+.lead-label{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-right:4px}
+.lead-btns .btn-tr{min-height:40px;padding:8px 14px;font-size:13px;box-shadow:var(--sh-sm)}
+.hero .trust-chips{margin-top:20px!important;gap:8px!important}
+.audit-band .lead-btns .lead-label,.foot .lead-btns .lead-label{display:none}
+.foot .lead-btns{margin-top:16px}
+
+/* section heads: wider headings, consistent gap to content */
+.sec-head{align-items:flex-end;gap:16px 48px;margin-bottom:clamp(32px,4vw,48px)}
+.sec-head h2{max-width:22ch;margin-top:12px}
+.sec-head > p,.sec-head p:not(.eyebrow){max-width:52ch;margin:0;line-height:1.6}
+.tr-sec .wp-block-buttons.mt-4{margin-top:clamp(28px,3vw,40px)!important;gap:12px}
+
+/* consistent vertical rhythm between sections */
+.tr-sec.block{padding-block:clamp(56px,7vw,96px)}
+section.block.tight{padding-block:clamp(32px,4vw,56px)}
+section.block.tight.pt-0{padding-top:0}
+
+/* services: 5th card spans the row instead of sitting alone */
+#services .row > .col:last-child:nth-child(odd){flex:0 0 100%;max-width:100%}
+#services .svc ul{margin-top:auto}
+
+/* growth grid + packages: even gutters */
+.growth-grid{gap:16px}
+.pkg-grid{gap:24px}
+.pkg-card .price-features{margin-block:10px 0}
+.svc-stack{gap:24px}
+.svc-detail .lede{margin-bottom:0}
+.svc-detail-foot{padding-top:20px;border-top:2px solid var(--black);margin-top:28px}
+
+/* readable paragraphs everywhere */
+.prose p,.case-block p,.text-muted-tr{line-height:1.65}
+
+/* ---------- Mobile hero: fewer layers, nothing overlapping ---------- */
+@media (max-width:991.98px){.scene3d .cube-wrap{top:-24px;right:16px}}
+@media (max-width:575.98px){
+  .hero-stack{min-height:300px;margin-top:8px}
+  .float.a{left:0;right:18%;top:24px}
+  .float.b,.float.c{display:none}
+  .scene3d .cube-wrap{top:-8px;right:14px;transform:translateZ(120px)}
+  .hero .stats{margin-top:8px}
+}
+
+/* ---------- Case study pages: spacing + delivery-fact card ---------- */
+.case-hero .facts{margin:20px 0 0}
+.case-hero .stack{margin-top:20px}
+.case-hero .meta + h1{margin-top:14px}
+.case-structure{margin-top:clamp(8px,2vw,24px)}
+.result.result-delivery{background:var(--red);color:var(--white)}
+.result.result-delivery b{color:var(--white);font-size:clamp(28px,3vw,40px)}
+.editor-only-note{border-style:dashed}
+.result.result-delivery{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px}
+.result.result-delivery b{margin:0}
+.case-page .order-first{order:-1}
+
+/* ---------- Header: 8 menu items on one line at laptop widths ---------- */
+.tr-navbar .cta-short{display:none}
+@media (min-width:992px) and (max-width:1535.98px){
+  .tr-nav .wp-block-navigation-item__content{padding:8px 9px;font-size:13px;letter-spacing:.01em}
+  .tr-navbar .cta-long{display:none}
+  .tr-navbar .cta-short{display:inline}
+  .tr-navbar .wp-block-button__link{white-space:nowrap}
+}
+@media (min-width:992px) and (max-width:1139.98px){
+  .tr-nav .wp-block-navigation-item__content{padding:7px 6px;font-size:12px}
+  .navbar-brand .logo{width:140px;height:auto}
+}
+@media (min-width:992px){
+  .tr-navbar{flex-wrap:nowrap}
+  .navbar-brand{flex:none;margin-right:12px}
+  .tr-menu{min-width:0;flex:1 1 auto}
+  .tr-nav .wp-block-navigation__container{flex-wrap:nowrap}
+  .tr-nav .wp-block-navigation-item__content{white-space:nowrap}
+}
+@media (min-width:992px){.tr-navbar .wp-block-button__link{white-space:nowrap}}
+@media (min-width:992px){.tr-navbar .cta-long{display:none}.tr-navbar .cta-short{display:inline}}

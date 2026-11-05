@@ -62,20 +62,63 @@ if ( ! $data ) {
 			<?php endif; ?>
 		</div>
 	</div>
-	<div class="row g-3">
-		<section class="col-md-6"><div class="case-block"><h2><?php esc_html_e( 'The challenge', 'tresundios' ); ?></h2><p><?php echo esc_html( $data['challenge'] ); ?></p></div></section>
-		<section class="col-md-6"><div class="case-block"><h2><?php esc_html_e( 'What we built', 'tresundios' ); ?></h2><p><?php echo esc_html( $data['solution'] ); ?></p></div></section>
+	<?php
+	// 2026 structure: client & industry → problem → what we built → services used → results → CTA.
+	// Results with no measured number show the visible placeholder below; replace it in the case study's "results" field.
+	$tresundios_placeholder = '[Add measurable result: e.g., 35% more enquiries within 3 months]';
+	$tresundios_services    = $data['types'] ? $data['types'] : $data['tech'];
+	$tresundios_has_number  = false;
+	foreach ( $data['results'] as $r ) {
+		if ( preg_match( '/\d/', ( $r['label'] ?? '' ) . ( $r['text'] ?? '' ) ) ) {
+			$tresundios_has_number = true;
+		}
+	}
+	?>
+	<div class="row g-3 case-structure">
+		<section class="col-md-6"><div class="case-block"><h2><span class="case-step" aria-hidden="true">01</span> <?php esc_html_e( 'Client & industry', 'tresundios' ); ?></h2><p><?php echo esc_html( trim( $data['client'] . ( $data['industry'] ? ' · ' . $data['industry'] : '' ) . ( $data['location'] ? ' · ' . $data['location'] : '' ), ' ·' ) ); ?></p></div></section>
+		<section class="col-md-6"><div class="case-block"><h2><span class="case-step" aria-hidden="true">02</span> <?php esc_html_e( 'The problem', 'tresundios' ); ?></h2><p><?php echo esc_html( $data['challenge'] ? $data['challenge'] : '[Add the problem the client faced]' ); ?></p></div></section>
+		<section class="col-md-6"><div class="case-block"><h2><span class="case-step" aria-hidden="true">03</span> <?php esc_html_e( 'What Tresundios built', 'tresundios' ); ?></h2><p><?php echo esc_html( $data['solution'] ? $data['solution'] : '[Add what we built]' ); ?></p></div></section>
+		<section class="col-md-6"><div class="case-block"><h2><span class="case-step" aria-hidden="true">04</span> <?php esc_html_e( 'Services used', 'tresundios' ); ?></h2>
+			<?php if ( $tresundios_services ) : ?>
+				<ul class="stack list-unstyled"><?php foreach ( $tresundios_services as $t ) : ?><li class="chip"><?php echo esc_html( $t ); ?></li><?php endforeach; ?></ul>
+			<?php else : ?>
+				<p>[Add services used]</p>
+			<?php endif; ?>
+		</div></section>
 	</div>
-	<?php if ( $data['results'] ) : ?>
-		<section aria-labelledby="results-title">
-			<h2 class="eyebrow" id="results-title"><?php esc_html_e( 'Results achieved', 'tresundios' ); ?></h2>
-			<div class="row g-3 mt-1">
-				<?php foreach ( $data['results'] as $r ) : ?>
-					<div class="col-md-4"><div class="result"><b><?php echo esc_html( $r['label'] ); ?></b><?php echo esc_html( $r['text'] ); ?></div></div>
-				<?php endforeach; ?>
-			</div>
-		</section>
-	<?php endif; ?>
+	<section aria-labelledby="results-title" class="mt-4">
+		<h2 class="eyebrow" id="results-title"><span class="case-step" aria-hidden="true">05</span> <?php esc_html_e( 'Results / measurable outcome', 'tresundios' ); ?></h2>
+		<div class="row g-3 mt-1">
+			<?php
+			// Measurable delivery facts taken only from each case study's own data (duration, scope, platforms).
+			// These are NOT business KPIs. Add real KPIs (enquiries, sales, traffic) to the case study's results when the client confirms them.
+			$tresundios_delivery = array(
+				'pmitn-prison-ministry-website'       => array( '7 sections', 'Launched seven dedicated content sections: story, activities, prison information, prisoner support, prayer, volunteering and contributions.' ),
+				'maria-beauty-care-portfolio'         => array( '2 months', 'From brief to a live custom WordPress theme with online appointment booking and a portfolio gallery.' ),
+				'uptownindia-uk-tea-ecommerce'        => array( '3 months', 'To launch a UK online store with secure payments, showcasing three specialty chai blends: Masala, Strawberry and Chocolate.' ),
+				'tef-kuwait-walkathan-app'            => array( '30 days', 'Of step tracking and live leaderboards per challenge, from one Flutter codebase for iOS and Android, built in 4 months.' ),
+				'legily-uk-serum-portal'              => array( '2 months', 'To design in Figma and build a responsive portal with three core journeys: Shop, About and the Affiliate programme.' ),
+				'beyon-education-study-abroad-portal' => array( '5 months', 'To build a WordPress portal with university profiles, course catalogues and an interactive application system.' ),
+				'robomed-innovations-website-redesign' => array( '6 weeks', 'To rebuild the site around the medical-device portfolio, with responsive layouts for desktop and mobile.' ),
+			);
+			$tresundios_fact = isset( $tresundios_delivery[ $data['slug'] ] ) ? $tresundios_delivery[ $data['slug'] ] : null;
+			if ( ! $tresundios_fact && $data['duration'] ) {
+				$tresundios_fact = array( $data['duration'], __( 'From brief to launch.', 'tresundios' ) );
+			}
+			?>
+			<?php foreach ( $data['results'] as $r ) : ?>
+				<div class="col-md-4"><div class="result"><b><?php echo esc_html( $r['label'] ?? '' ); ?></b><?php echo esc_html( $r['text'] ?? '' ); ?></div></div>
+			<?php endforeach; ?>
+			<?php if ( $tresundios_fact ) : ?>
+				<div class="col-12 order-first"><div class="result result-delivery"><b><?php echo esc_html( $tresundios_fact[0] ); ?></b><?php echo esc_html( $tresundios_fact[1] ); ?></div></div>
+			<?php elseif ( ! $tresundios_has_number ) : ?>
+				<div class="col-md-4"><div class="result result-placeholder"><b><?php echo esc_html( $tresundios_placeholder ); ?></b></div></div>
+			<?php endif; ?>
+			<?php if ( ! $tresundios_has_number && current_user_can( 'edit_posts' ) ) : ?>
+				<div class="col-12"><p class="note editor-only-note mb-0"><strong>Editors only:</strong> <?php echo esc_html( $tresundios_placeholder ); ?>. Add a confirmed business KPI to this case study's results. Visitors don't see this note.</p></div>
+			<?php endif; ?>
+		</div>
+	</section>
 	<div class="case-foot">
 		<div class="d-flex flex-wrap gap-2">
 			<?php if ( $data['live_url'] ) : ?>
@@ -83,6 +126,6 @@ if ( ! $data ) {
 			<?php endif; ?>
 			<a class="btn-tr btn-tr-ghost" href="<?php echo esc_url( get_post_type_archive_link( 'case_study' ) ); ?>"><?php esc_html_e( 'All case studies', 'tresundios' ); ?></a>
 		</div>
-		<a class="btn-tr btn-tr-primary" href="<?php echo esc_url( home_url( '/contact/' ) ); ?>"><?php esc_html_e( 'Start a project like this →', 'tresundios' ); ?></a>
+		<a class="btn-tr btn-tr-primary" href="#audit" data-track="cta_click" data-track-location="case-study"><?php esc_html_e( 'Get a free website & growth audit →', 'tresundios' ); ?></a>
 	</div>
 </article>
