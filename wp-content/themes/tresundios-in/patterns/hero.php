@@ -18,7 +18,11 @@ defined( 'ABSPATH' ) || exit;
 <div class="wp-block-group row hero align-items-center g-5"><!-- wp:group {"className":"col-lg-7 reveal","layout":{"type":"default"}} -->
 <div class="wp-block-group col-lg-7 reveal"><!-- wp:html -->
 <span class="eyebrow d-inline-flex align-items-center gap-2"><img class="icon-badge" src="<?php echo esc_url( get_theme_file_uri( 'assets/img/favicon.webp' ) ); ?>" alt="" width="22" height="22">Chennai-based digital studio for ambitious SMEs</span>
-<h1 class="mt-3">Websites, apps and digital growth systems <span class="grad">for ambitious SMEs.</span></h1>
+<h1 class="hero-title mt-3">
+	<span class="ht-line" style="--d:0">Websites, <span class="ht-chip">apps</span> <span class="ht-outline">and</span> </span>
+	<span class="ht-line" style="--d:1">digital <span class="ht-mark">growth<svg class="ht-scribble" viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 14 C 40 4, 80 18, 120 9 S 180 6, 197 11" /></svg></span> systems </span>
+	<span class="ht-line" style="--d:2"><span class="grad">for ambitious SMEs.</span></span>
+</h1>
 <!-- /wp:html -->
 
 <!-- wp:paragraph {"className":"lede mt-4"} -->
