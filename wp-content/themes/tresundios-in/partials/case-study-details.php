@@ -89,11 +89,33 @@ if ( ! $data ) {
 	<section aria-labelledby="results-title" class="mt-4">
 		<h2 class="eyebrow" id="results-title"><span class="case-step" aria-hidden="true">05</span> <?php esc_html_e( 'Results / measurable outcome', 'tresundios' ); ?></h2>
 		<div class="row g-3 mt-1">
+			<?php
+			// Measurable delivery facts taken only from each case study's own data (duration, scope, platforms).
+			// These are NOT business KPIs. Add real KPIs (enquiries, sales, traffic) to the case study's results when the client confirms them.
+			$tresundios_delivery = array(
+				'pmitn-prison-ministry-website'       => array( '7 sections', 'Launched seven dedicated content sections: story, activities, prison information, prisoner support, prayer, volunteering and contributions.' ),
+				'maria-beauty-care-portfolio'         => array( '2 months', 'From brief to a live custom WordPress theme with online appointment booking and a portfolio gallery.' ),
+				'uptownindia-uk-tea-ecommerce'        => array( '3 months', 'To launch a UK online store with secure payments, showcasing three specialty chai blends: Masala, Strawberry and Chocolate.' ),
+				'tef-kuwait-walkathan-app'            => array( '30 days', 'Of step tracking and live leaderboards per challenge, from one Flutter codebase for iOS and Android, built in 4 months.' ),
+				'legily-uk-serum-portal'              => array( '2 months', 'To design in Figma and build a responsive portal with three core journeys: Shop, About and the Affiliate programme.' ),
+				'beyon-education-study-abroad-portal' => array( '5 months', 'To build a WordPress portal with university profiles, course catalogues and an interactive application system.' ),
+				'robomed-innovations-website-redesign' => array( '6 weeks', 'To rebuild the site around the medical-device portfolio, with responsive layouts for desktop and mobile.' ),
+			);
+			$tresundios_fact = isset( $tresundios_delivery[ $data['slug'] ] ) ? $tresundios_delivery[ $data['slug'] ] : null;
+			if ( ! $tresundios_fact && $data['duration'] ) {
+				$tresundios_fact = array( $data['duration'], __( 'From brief to launch.', 'tresundios' ) );
+			}
+			?>
 			<?php foreach ( $data['results'] as $r ) : ?>
 				<div class="col-md-4"><div class="result"><b><?php echo esc_html( $r['label'] ?? '' ); ?></b><?php echo esc_html( $r['text'] ?? '' ); ?></div></div>
 			<?php endforeach; ?>
-			<?php if ( ! $tresundios_has_number ) : ?>
+			<?php if ( $tresundios_fact ) : ?>
+				<div class="col-12 order-first"><div class="result result-delivery"><b><?php echo esc_html( $tresundios_fact[0] ); ?></b><?php echo esc_html( $tresundios_fact[1] ); ?></div></div>
+			<?php elseif ( ! $tresundios_has_number ) : ?>
 				<div class="col-md-4"><div class="result result-placeholder"><b><?php echo esc_html( $tresundios_placeholder ); ?></b></div></div>
+			<?php endif; ?>
+			<?php if ( ! $tresundios_has_number && current_user_can( 'edit_posts' ) ) : ?>
+				<div class="col-12"><p class="note editor-only-note mb-0"><strong>Editors only:</strong> <?php echo esc_html( $tresundios_placeholder ); ?>. Add a confirmed business KPI to this case study's results. Visitors don't see this note.</p></div>
 			<?php endif; ?>
 		</div>
 	</section>

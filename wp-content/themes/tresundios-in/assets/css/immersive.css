@@ -127,3 +127,15 @@ section.block.tight.pt-0{padding-top:0}
   .scene3d .cube-wrap{top:-8px;right:14px;transform:translateZ(120px)}
   .hero .stats{margin-top:8px}
 }
+
+/* ---------- Case study pages: spacing + delivery-fact card ---------- */
+.case-hero .facts{margin:20px 0 0}
+.case-hero .stack{margin-top:20px}
+.case-hero .meta + h1{margin-top:14px}
+.case-structure{margin-top:clamp(8px,2vw,24px)}
+.result.result-delivery{background:var(--red);color:var(--white)}
+.result.result-delivery b{color:var(--white);font-size:clamp(28px,3vw,40px)}
+.editor-only-note{border-style:dashed}
+.result.result-delivery{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 20px}
+.result.result-delivery b{margin:0}
+.case-page .order-first{order:-1}
